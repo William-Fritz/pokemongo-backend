@@ -1,0 +1,2 @@
+class PokemonEggsController < ApplicationController
+end

@@ -1,0 +1,2 @@
+class PokemonEgg < ApplicationRecord
+end

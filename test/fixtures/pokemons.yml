@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  lvl: 1
+  exp: 1
+  status: MyString
+  type1: MyString
+  type2: MyString
+  move1: MyString
+  move2: MyString
+  item: false
+
+two:
+  name: MyString
+  lvl: 1
+  exp: 1
+  status: MyString
+  type1: MyString
+  type2: MyString
+  move1: MyString
+  move2: MyString
+  item: false

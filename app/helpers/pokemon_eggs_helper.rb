@@ -1,0 +1,2 @@
+module PokemonEggsHelper
+end
