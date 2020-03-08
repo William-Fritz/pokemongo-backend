@@ -8,45 +8,53 @@ namespace PokemonGo.Models
 {
     public class PlayerQuery
     {
-        public AppDb Db { get; }
+        public AppDb Db { get; set; }
 
         public PlayerQuery(AppDb db)
         {
             Db = db;
         }
 
-        public async Task<Player> FindOneAsync(int id)
+        public async Task UpdateName(int id, string name)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM players WHERE id = @id";
+            cmd.CommandText = @"CALL update_players_name(@id, @name);";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
                 DbType = DbType.Int32,
                 Value = id,
             });
-            var result = await ReadAllAsync(await cmd.ExecuteReaderAsync());
-            return result.Count > 0 ? result[0] : null;
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@name",
+                DbType = DbType.String,
+                Value = name,
+            });
+            await cmd.ExecuteNonQueryAsync();
         }
 
-        private async Task<List<Player>> ReadAllAsync(DbDataReader reader)
+        public async Task<Player> GetPlayerInfo(int id)
         {
-            var players = new List<Player>();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"CALL get_player_info(@id)";
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@id",
+                DbType = DbType.Int32,
+                Value = id,
+            });
+            var reader = await cmd.ExecuteReaderAsync();
+            var result = new Player();
             using (reader)
             {
-                while (await reader.ReadAsync())
-                {
-                    var post = new Player(Db)
-                    {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Money = reader.GetInt32(2),
-                        EggsHeld = reader.GetInt32(3)
-                    };
-                    players.Add(post);
-                }
+                await reader.ReadAsync();
+                result.Name = reader.GetString(0);
+                result.PokemonCount = reader.GetInt32(1);
+                result.UniquePokemonCount = reader.GetInt32(2);
             }
-            return players;
+            return result;
         }
+       
     }
 }

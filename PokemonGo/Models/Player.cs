@@ -10,6 +10,8 @@ namespace PokemonGo.Models
         public string Name { get; set; }
         public int Money { get; set; }
         public int EggsHeld { get; set; }
+        public int PokemonCount { get; set; }
+        public int UniquePokemonCount { get; set; }
 
         internal AppDb Db { get; set; }
 
@@ -30,15 +32,6 @@ namespace PokemonGo.Models
             BindParams(cmd);
             await cmd.ExecuteNonQueryAsync();
             Id = (int) cmd.LastInsertedId;
-        }
-
-        public async Task UpdateAsync()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"UPDATE `players` SET `name` = @name, `money` = @money, `eggs_held` = @eggs_held";
-            BindParams(cmd);
-            BindId(cmd);
-            await cmd.ExecuteNonQueryAsync();
         }
         private void BindId(MySqlCommand cmd)
         {
