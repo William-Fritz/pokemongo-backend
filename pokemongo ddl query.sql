@@ -5,6 +5,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema pokemon_go
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
 -- Schema pokemon_go
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `pokemon_go` ;
@@ -88,11 +95,11 @@ ENGINE = InnoDB;
 -- Table `pokemon_go`.`items`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pokemon_go`.`items` (
-  `item_no` INT NOT NULL,
+  `id` INT NOT NULL,
   `item_name` VARCHAR(25) NULL,
   `buy_price` INT NOT NULL,
   `sell_price` INT NOT NULL,
-  PRIMARY KEY (`item_no`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
